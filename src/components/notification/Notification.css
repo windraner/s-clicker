@@ -1,0 +1,19 @@
+.Toastify__toast {
+  font-family: weld-light, sans-serif;
+  background: #6ec8dc;
+  border-radius: 0.1em;
+}
+
+.Toastify__toast--success {
+  background: #47e2a1;
+  color: black;
+}
+
+.Toastify__toast--warning {
+  background: #fffa46;
+  color: black;
+}
+
+.Toastify__toast--error {
+  background: #f86060;
+}
