@@ -22,6 +22,7 @@ CustomButton.propTypes = {
 
 const StyledCustomButton = styled.button`
   display: inline-block;
+  height: 100%;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   color: #354052;

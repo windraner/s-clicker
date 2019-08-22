@@ -1,43 +1,49 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import CustomButton from 'common/custom-button'
 import CustomInput from 'common/custom-input'
-import { connect } from 'react-redux'
+import TagsBlock from 'components/tags-block'
+
 import { stopCompanyAttempt } from 'actions'
 import * as CONSTANT from 'constant'
-import PropTypes from 'prop-types'
 
-class AddCompanyModal extends Component {
-  componentDidMount() {
+function AddCompanyModal () {
+  const [name, setName] = React.useState('')
+  const [tags, setTags] = React.useState([])
+
+  React.useEffect(() => {
     document.body.style.overflow = 'hidden'
+    return () => document.body.style.overflow = 'unset'
+  }, [])
+
+  const companySubmitHandler = () => {
+    // const { openedModalItem, stopCompanyAttempt } = this.props
+    // stopCompanyAttempt(openedModalItem)
   }
 
-  componentWillUnmount () {
-    document.body.style.overflow = 'unset'
-  }
+  return (
+    <StyledModalWrapper>
+      <StyledModalTitle>Create New company</StyledModalTitle>
+      <CustomInput
+        title='Company name'
+        type='text'
+        value={name}
+        setValue={setName}
+      />
 
-  companyStopHandler = () => {
-    const { openedModalItem, stopCompanyAttempt } = this.props
-    stopCompanyAttempt(openedModalItem)
-  }
+      <TagsBlock
+        tags={tags}
+        setTags={setTags}
+      />
 
-  render() {
-    return (
-      <StyledModalWrapper>
-        <StyledModalTitle>Create New company</StyledModalTitle>
-        <CustomInput
-          title='Company name'
-          type='text'
-          value={'qwe'}
-          setValue={() => {}}
-        />
-        <CustomButton
-          text="Stop"
-          clickHandler={this.companyStopHandler}
-        />
-      </StyledModalWrapper>
-    )
-  }
+      <CustomButton
+        text="Submit"
+        clickHandler={companySubmitHandler}
+      />
+    </StyledModalWrapper>
+  )
 }
 
 AddCompanyModal.propTypes = {
@@ -51,7 +57,7 @@ const StyledModalWrapper = styled.div`
   flex-direction: column;
   background: #fff;
   width: 100%;
-  max-width: 425px;
+  max-width: 625px;
   padding: 2rem 1rem;
   z-index: 10;
 `

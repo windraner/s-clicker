@@ -1,19 +1,11 @@
 import React, { Component } from 'react'
-import requestHandler from 'utils/request-handler'
-
+import { connect } from 'react-redux'
 import CompanyItem from './CompanyItem'
+import { fetchCompaniesList } from 'actions'
 
-export default class CompaniesList extends Component {
+class CompaniesList extends Component {
   componentDidMount () {
-    const options = {
-      type: 'get',
-      url: '/stop/'
-    }
-
-    requestHandler(options)
-      .then(({ data }) => {
-        console.log(data)
-      })
+    this.props.fetchCompaniesList()
   }
 
   render() {
@@ -51,3 +43,16 @@ export default class CompaniesList extends Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  const { companiesList } = state
+  return {
+    companiesList
+  }
+}
+
+const mapDispatchToProps = {
+  fetchCompaniesList
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CompaniesList)

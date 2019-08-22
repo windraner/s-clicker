@@ -1,8 +1,8 @@
 export const LOADING = 'loading'
 export const OPENED_MODAL = 'openedModal'
 export const OPENED_MODAL_ITEM = 'openedModalItem'
+export const COMPANIES_LIST = 'companiesList'
 
-export const PAGE = 'page'
-export const PAGE_COUNT = 'pageCount'
-
-export const QUERY = 'query'
+// export const PAGE = 'page'
+// export const PAGE_COUNT = 'pageCount'
+// export const QUERY = 'query'

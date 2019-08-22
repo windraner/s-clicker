@@ -4,9 +4,10 @@ const initialState = {
   [CONSTANT.LOADING]: false,
   [CONSTANT.OPENED_MODAL]: null,
   [CONSTANT.OPENED_MODAL_ITEM]: null,
-  [CONSTANT.PAGE]: 1,
-  [CONSTANT.PAGE_COUNT]: 1,
-  [CONSTANT.QUERY]: '',
+  [CONSTANT.COMPANIES_LIST]: [],
+  // [CONSTANT.PAGE]: 1,
+  // [CONSTANT.PAGE_COUNT]: 1,
+  // [CONSTANT.QUERY]: '',
 }
 
 export default function reducer(state = initialState, action) {
@@ -26,26 +27,33 @@ export default function reducer(state = initialState, action) {
       }
     }
 
-    case CONSTANT.PAGE: {
+    case CONSTANT.COMPANIES_LIST: {
       return {
         ...state,
-        [CONSTANT.PAGE]: action.payload,
+        [CONSTANT.COMPANIES_LIST]: action.payload,
       }
     }
 
-    case CONSTANT.PAGE_COUNT: {
-      return {
-        ...state,
-        [CONSTANT.PAGE_COUNT]: action.payload,
-      }
-    }
+    // case CONSTANT.PAGE: {
+    //   return {
+    //     ...state,
+    //     [CONSTANT.PAGE]: action.payload,
+    //   }
+    // }
 
-    case CONSTANT.QUERY: {
-      return {
-        ...state,
-        [CONSTANT.QUERY]: action.payload,
-      }
-    }
+    // case CONSTANT.PAGE_COUNT: {
+    //   return {
+    //     ...state,
+    //     [CONSTANT.PAGE_COUNT]: action.payload,
+    //   }
+    // }
+
+    // case CONSTANT.QUERY: {
+    //   return {
+    //     ...state,
+    //     [CONSTANT.QUERY]: action.payload,
+    //   }
+    // }
 
     default:
       return state

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 import cookies from 'js-cookie'
+import { store } from 'index'
+import * as CONSTANT from 'constant'
 
 export default (options) => {
 	const token = cookies.get('token')
@@ -37,7 +39,8 @@ export default (options) => {
 		default:
 			axiosOptions.data = options.data
 			break
-	}
+  }
 
-	return axios(axiosOptions)
+  store.dispatch({ type: CONSTANT.LOADING, payload: true })
+  return axios(axiosOptions)
 }

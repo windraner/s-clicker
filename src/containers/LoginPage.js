@@ -53,10 +53,8 @@ LoginPage.propTypes = {
   sendLoginAttempt: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    sendLoginAttempt: (data) => dispatch(sendLoginAttempt(data)),
-  }
+const mapDispatchToProps = {
+  sendLoginAttempt
 }
 
 export default connect(null, mapDispatchToProps)(LoginPage)
