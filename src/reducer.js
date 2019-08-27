@@ -5,6 +5,8 @@ const initialState = {
   [CONSTANT.OPENED_MODAL]: null,
   [CONSTANT.OPENED_MODAL_ITEM]: null,
   [CONSTANT.COMPANIES_LIST]: [],
+  [CONSTANT.QUERY_TITLES]: [],
+  [CONSTANT.IGNORE_TITLES]: [],
   // [CONSTANT.PAGE]: 1,
   // [CONSTANT.PAGE_COUNT]: 1,
   // [CONSTANT.QUERY]: '',
@@ -31,6 +33,20 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         [CONSTANT.COMPANIES_LIST]: action.payload,
+      }
+    }
+
+    case CONSTANT.QUERY_TITLES: {
+      return {
+        ...state,
+        [CONSTANT.QUERY_TITLES]: action.payload,
+      }
+    }
+
+    case CONSTANT.IGNORE_TITLES: {
+      return {
+        ...state,
+        [CONSTANT.IGNORE_TITLES]: action.payload,
       }
     }
 

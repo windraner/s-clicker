@@ -5,26 +5,18 @@ import { browserHistory } from 'App'
 import createNotification from 'utils/createNotification'
 
 export const sendLoginAttempt = (data) => {
-  return dispatch => {
+  return () => {
     const options = {
       type: 'post',
       url: '/login/',
       data
     }
-
-    requestHandler(options)
-      .then(({ data: { data } }) => {
-        cookies.set('token', data.auth_token, { expires: 365 })
-        browserHistory.push('/')
-        dispatch({ type: CONSTANT.LOADING, payload: false })
-        createNotification('Successful login', 'success')
-      })
-      .catch(function (error) {
-        if(error.response && error.response.data.error) {
-          createNotification(error.response.data.error, 'error')
-        }
-        dispatch({ type: CONSTANT.LOADING, payload: false })
-      })
+    const cb = ({ data }) => {
+      cookies.set('token', data.auth_token, { expires: 365 })
+      browserHistory.push('/')
+      createNotification('Successful login', 'success')
+    }
+    requestHandler({ options, cb })
   }
 }
 
@@ -34,38 +26,99 @@ export const fetchCompaniesList = () => {
       type: 'get',
       url: '/main/'
     }
+    const cb = ({ data }) => {
+      dispatch({ type: CONSTANT.COMPANIES_LIST, payload: data })
+    }
+    requestHandler({ options, cb })
+  }
+}
 
-    requestHandler(options)
-      .then(({ data: { data } }) => {
-        dispatch({ type: CONSTANT.COMPANIES_LIST, payload: data })
-        dispatch({ type: CONSTANT.LOADING, payload: false })
-      })
-      .catch(function (error) {
-        if(error.response && error.response.data.error) {
-          createNotification(error.response.data.error, 'error')
-        }
-        dispatch({ type: CONSTANT.LOADING, payload: false })
-      })
+export const fetchQueryTitles = () => {
+  return (dispatch) => {
+    const options = {
+      type: 'get',
+      url: '/query-titles/'
+    }
+    const cb = ({ data }) => {
+      dispatch({ type: CONSTANT.QUERY_TITLES, payload: data })
+    }
+    requestHandler({ options, cb })
+  }
+}
+
+export const fetchQueryTags = (queryId, setQueryTagsList) => {
+  return (dispatch) => {
+    const options = {
+      type: 'post',
+      url: '/query-titles/',
+      data: {
+        query_id: queryId
+      }
+    }
+    const cb = ({ data }) => {
+      setQueryTagsList(data)
+    }
+    requestHandler({ options, cb })
+  }
+}
+
+export const fetchIgnoreTitles = () => {
+  return (dispatch) => {
+    const options = {
+      type: 'get',
+      url: '/ignore-titles/'
+    }
+    const cb = ({ data }) => {
+      dispatch({ type: CONSTANT.IGNORE_TITLES, payload: data })
+    }
+    requestHandler({ options, cb })
+  }
+}
+
+export const fetchIgnoreTags = (igonreId, setIgnoreTagsList) => {
+  return (dispatch) => {
+    const options = {
+      type: 'post',
+      url: '/ignore-titles/',
+      data: {
+       ignore_id: igonreId
+      }
+    }
+    const cb = ({ data }) => {
+      setIgnoreTagsList(data)
+    }
+    requestHandler({ options, cb })
+  }
+}
+
+export const createCompanyAttempt = (data) => {
+  return (dispatch) => {
+    const options = {
+      type: 'post',
+      url: '/main/',
+      data
+    }
+    const cb = () => {
+      fetchCompaniesList()
+      dispatch({ type: CONSTANT.OPENED_MODAL, payload: null, item: null })
+    }
+    requestHandler({ options, cb })
   }
 }
 
 export const stopCompanyAttempt = (id) => {
   return dispatch => {
-    // const options = {
-    //   type: 'post',
-    //   url: `/stop/${id}/`
-    // }
-
-    // dispatch({ type: CONSTANT.LOADING, payload: true })
-    console.log('id', id)
-
-    // requestHandler(options)
-    //   .then(({ data }) => {
-    //     dispatch({ type: CONSTANT.LOADING, payload: false })
-    //     dispatch({ type: CONSTANT.OPENED_MODAL, payload: null, item: null })
-    //   }).catch(function (error) {
-    //     dispatch({ type: CONSTANT.LOADING, payload: false })
-    //     dispatch({ type: CONSTANT.OPENED_MODAL, payload: null, item: null })
-    //   })
+    const options = {
+      type: 'delete',
+      url: `/stop/${id}/`
+    }
+    const cb = () => {
+      fetchCompaniesList()
+      dispatch({ type: CONSTANT.OPENED_MODAL, payload: null, item: null })
+    }
+    const failCb = () => {
+      dispatch({ type: CONSTANT.OPENED_MODAL, payload: null, item: null })
+    }
+    requestHandler({ options, cb, failCb})
   }
 }

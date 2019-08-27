@@ -5,34 +5,17 @@ import { fetchCompaniesList } from 'actions'
 
 class CompaniesList extends Component {
   componentDidMount () {
-    this.props.fetchCompaniesList()
+    const { fetchCompaniesList } = this.props
+    fetchCompaniesList()
   }
 
   render() {
-    const mock = [
-      {
-        id: '1',
-        name: 'test111',
-        status: 'Canceled'
-      },
-      {
-        id: '2',
-        name: 'test2',
-        status: 'Ready'
-      },
-      {
-        id: '3',
-        name: 'test3',
-        status: 'In Progress'
-      }
-    ]
-    const renderitems = mock.map(({ id, name, status }) => {
+    const { companiesList } = this.props
+    const renderitems = companiesList.map((company, index) => {
       return (
         <CompanyItem
-          key={id}
-          id={id}
-          name={name}
-          status={status}
+          key={index}
+          company={company}
         />
       )
     })

@@ -5,17 +5,22 @@ import PropTypes from 'prop-types'
 import CustomButton from 'common/custom-button'
 import * as CONSTANT from 'constant'
 
-function CompanyItem ({ id, name, status, openModal }) {
+function CompanyItem ({ openModal, company: { id, query_name, is_enabled } }) {
+  const status = React.useMemo(() => {
+    if (is_enabled === undefined) return { color: 'red', text: 'Canceled'}
+    if (is_enabled) return { color: 'green', text: 'In Progress'}
+    return { color: 'yellow', text: 'Ready'}
+  }, [is_enabled])
   return (
     <StyledCompanyWrapper
       key={id}
     >
       <StyledCompanyName>
-        {name}
+        {query_name}
       </StyledCompanyName>
 
       <StyledSection>
-        Status: <StyledCompanyStatus>{status}</StyledCompanyStatus>
+        Status: <StyledCompanyStatus color={status.color}>{status.text}</StyledCompanyStatus>
       </StyledSection>
 
       <StyledSection>
@@ -65,7 +70,7 @@ const StyledCompanyStatus = styled.span`
   display: inline-block;
   width: 170px;
   color: #fff;
-  background: red;
+  background: ${({ color }) => color};
   padding: 10px 30px;
   margin-left: 10px;
   border-radius: 5px;

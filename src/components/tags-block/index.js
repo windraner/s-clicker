@@ -19,7 +19,7 @@ export default function TagsBlock ({ tags, setTags }) {
   }, [tags, setTags])
 
   const renderTags = React.useMemo(() => {
-    return tags.map((text) => (<CustomTag key={text} text={text} clickHandler={removeTagHandler} />))
+    return tags.map(({ id, data }) => (<CustomTag key={id} text={data} clickHandler={removeTagHandler} />))
   }, [tags, removeTagHandler])
 
   return (
